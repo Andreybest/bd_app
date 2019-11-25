@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+    <meta charset="utf-8" />
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+
+    $( document ).ready(function() {
+        $.getJSON("http://127.0.0.1:3000/register_info")
+            .done(function(result) {
+                $("#room_num").attr("max", result.rooms);
+                result.socials.forEach(social => {
+                    let social_html = "<option value='" + social["Код_льготы"] + "'> " + social["Тип_льготы"] + " - " + social["Скидка"] + "% </option>";
+                    $("#selector").append(social_html);
+                });
+            })
+            .fail(function(jq, status, error) {
+                alert(error);
+            });
+    });
+    </script>
+</head>
+<body>
+
+    <div class="menu"><a href="../">Список студентов</a></div>
+    <div class="regiser_list">
+        <form action="http://127.0.0.1:3000/register_student" method="post">
+            <p><b>ФИО</b><br>
+                <input type="text" size="100" name="full_name" placeholder="Жмышенко Валерий Альбертовичь" required>
+            </p>
+            <p><b>Год рождения</b><br>
+                <input type="number" size="4" name="year" min="0" max="3000" value="2000" required>
+            </p>
+            <p><b>Пол:</b><br>
+                <input type="radio" name="sex" value="М" required> Мужской<Br>
+                <input type="radio" name="sex" value="Ж"> Женский<Br>
+            </p>
+            <p><b>Адрес</b><br>
+                <input type="text" size="100" name="street" placeholder="ул. Пушкина дом Калатушкина" required>
+            </p>
+            <p><b>Група</b><br>
+                <input type="number" size="2" name="group" min="11" max="49" value="11" required>
+            </p>
+            <p><b>Льгота</b><br>
+                <select id="selector" name="social">
+                </select>
+            </p>
+            <p><b>№ Паспорта</b><br>
+                <input type="text" size="100" name="passport_num" placeholder="000000228" required>
+            </p>
+            <p><b>№ Комнаты</b><br>
+                <input id="room_num" type="number" size="1" name="room_num" min="1" max="2" value="1" required>
+            </p>
+            <input type="submit" value="Зарегистрировать" />
+        </form>
+    </div>
+
+</body>
+</html> 

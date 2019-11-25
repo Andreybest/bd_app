@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Общежитие</title>
+    <meta charset="utf-8" />
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+
+    $( document ).ready(function() {
+        $.getJSON("http://127.0.0.1:3000/students")
+            .done(function(result) {
+
+
+                result.forEach(student => {
+                    let student_vars = Object.values(student)
+                    let student_html = "<tr>";
+                    for (let i = 0; i < student_vars.length; i++) {
+                        student_html += "<td>" + student_vars[i] + "</td>";
+                    }
+                    $(".students").append(student_html +"</tr>")
+                });
+            })
+            .fail(function(jq, status, error) {
+                alert(error);
+            });
+    });
+    </script>
+</head>
+<body>
+
+    <div class="menu"><a href="/register">Регистрация</a></div>
+    <div class="livers">
+        <table class="students">
+                <tr>
+                    <th>Код Студента</th>
+                    <th>ФИО</th>
+                    <th>Год Рождения</th>
+                    <th>Пол</th>
+                    <th>Адрес</th>
+                    <th>Группа</th>
+                    <th>Код льготы</th>
+                    <th>№ Паспорта</th>
+                    <th>№ Комнаты</th>
+                    <th>Дата заселения </th>
+                </tr>
+        </table>
+    </div>
+
+</body>
+</html> 
